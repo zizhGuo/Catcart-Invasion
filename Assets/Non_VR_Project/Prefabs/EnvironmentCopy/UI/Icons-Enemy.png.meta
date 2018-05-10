@@ -1,0 +1,249 @@
+fileFormatVersion: 2
+guid: b4b80c4bec0b2744a90e63a9afaac55f
+timeCreated: 1524090898
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: multiplayer-icons1_0
+    21300002: multiplayer-icons1_1
+    21300004: multiplayer-icons1_2
+    21300006: multiplayer-icons1_3
+    21300008: multiplayer-icons1_4
+    21300010: multiplayer-icons1_5
+    21300012: multiplayer-icons1_6
+    21300014: multiplayer-icons1_7
+    21300016: multiplayer-icons1_8
+    21300018: multiplayer-icons1_9
+    21300020: multiplayer-icons1_10
+    21300022: multiplayer-icons1_11
+    21300024: multiplayer-icons1_12
+    21300026: multiplayer-icons1_13
+    21300028: multiplayer-icons1_14
+    21300030: multiplayer-icons1_15
+    21300032: Icons-Enemy_0
+    21300034: Icons-Enemy_1
+    21300036: Icons-Enemy_2
+    21300038: Icons-Enemy_3
+    21300040: Icons-Enemy_4
+    21300042: Icons-Enemy_5
+    21300044: Icons-Enemy_6
+    21300046: Icons-Enemy_7
+    21300048: Icons-Enemy_8
+    21300050: Icons-Enemy_9
+    21300052: Icons-Enemy_10
+    21300054: Icons-Enemy_11
+    21300056: Icons-Enemy_12
+    21300058: Icons-Enemy_13
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Icons-Enemy_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 266
+        width: 251
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_1
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 362
+        width: 7
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_2
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 362
+        width: 7
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_3
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 390
+        width: 7
+        height: 122
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_4
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 373
+        width: 7
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_5
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 276
+        width: 171
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_6
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 290
+        width: 219
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 254
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_12
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 16
+        width: 254
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_13
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 285
+        width: 133
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons-Enemy_7
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 273
+        width: 197
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
