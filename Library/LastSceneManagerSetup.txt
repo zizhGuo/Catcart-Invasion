@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Non_VR_Project/Scenes/Test Z_NonVR.unity
+  isLoaded: 1
+  isActive: 1
