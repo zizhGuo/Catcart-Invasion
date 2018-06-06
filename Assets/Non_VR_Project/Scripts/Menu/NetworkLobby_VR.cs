@@ -28,6 +28,7 @@ public class NetworkLobby_VR : NetworkManager {
     public override void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
     {
         base.OnMatchCreate(success, extendedInfo, matchInfo);
+        StartHost(matchInfo);
         _currentMatchID = (System.UInt64)matchInfo.networkId;
     }
 
@@ -40,6 +41,7 @@ public class NetworkLobby_VR : NetworkManager {
                 StopHost();
                 matchMaker.DestroyMatch((NetworkID)_currentMatchID, 0, OnDestroyMatch);
                 _disconnectServer = true;
+                Application.Quit();
             }
         }
 	}

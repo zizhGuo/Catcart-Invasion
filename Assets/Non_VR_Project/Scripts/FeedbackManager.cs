@@ -22,7 +22,7 @@ public class FeedbackManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         
-        manModel.gameObject.SetActive(true);
+       // manModel.gameObject.SetActive(true);
         manScale = manModel.gameObject.transform.localScale.x;
         timer = Time.time;
         rdIndex = new System.Random(DateTime.Now.Millisecond);

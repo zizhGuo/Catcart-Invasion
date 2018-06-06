@@ -192,6 +192,7 @@
     <Compile Include="Assets\Non_VR_Project\Scripts\InitiateObjects.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\Menu\CameraInstance.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\Menu\MainMenu.cs" />
+    <Compile Include="Assets\Non_VR_Project\Scripts\Menu\NetworkLobby_NVR.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\Menu\NetworkLobby_VR.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\ModelEnlarger.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\MultDrillerJumpBehavior.cs" />
