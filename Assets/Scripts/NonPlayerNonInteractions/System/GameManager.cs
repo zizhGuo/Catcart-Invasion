@@ -94,10 +94,10 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-
         score = 0;
         gameOver = false;
-        gameStart = false;
+        gameStart = true;        // Copy from workable project.
+        allowMultiplayer = true; // add this one for testing.
         //sminRocks = minRocks;
         //smaxRocks = maxRocks;
         //smaxRockInc = maxRockInc;
@@ -134,13 +134,15 @@ public class GameManager : MonoBehaviour
         DetectIfPlayerIsInKart.playerPlayArea = FindObjectOfType<PlayAreaFollowKart>();
         DetectIfPlayerIsInKart.playerHead = FindObjectOfType<SteamVR_Camera>();
 
+        //sLeftController.GetComponent<VRTK_ControllerActions>().ToggleControllerModel(false, null);
+        //sRightController.GetComponent<VRTK_ControllerActions>().ToggleControllerModel(false, null);
         // Setup color and name for cats
-        catsInfo = FindObjectOfType<CatsInfo>();
-        for (int i = 0; i < cats.Length; i++)
-        {
-            cats[i].GetComponent<InteractWithCat>().catColorRenderer.material = catsInfo.catsInfo[i].catMat;
-            cats[i].GetComponent<InteractWithCat>().catName = catsInfo.catsInfo[i].catName;
-        }
+        //catsInfo = FindObjectOfType<CatsInfo>();
+        //for (int i = 0; i < cats.Length; i++)                                                                  // delete has no difference. 
+        //{
+        //    //cats[i].GetComponent<InteractWithCat>().catColorRenderer.material = catsInfo.catsInfo[i].catMat;
+        //    cats[i].GetComponent<InteractWithCat>().catName = catsInfo.catsInfo[i].catName;
+        //}
 
         if (alwaysSyncPlayAreaWithCart)
         {
@@ -156,7 +158,9 @@ public class GameManager : MonoBehaviour
                 networkManager.SetActive(false);
             }
         }
+        
         //networkManager = NetworkManager.singleton.gameObject;
+        //GameManager.gameStartProc(); // Start Game
 
     }
 
@@ -178,7 +182,7 @@ public class GameManager : MonoBehaviour
                 activeCatCount--;
             }
         }
-        if (gameStart && !gameFinished && activeCatCount <= 0)
+        if (gameStart && !gameFinished && activeCatCount <= 0)  //////////////////////////////////////////////////// game has started.
         {
             //print("no cat " + activeCatCount);
             gameLostProc();
@@ -313,7 +317,7 @@ public class GameManager : MonoBehaviour
     {
         if (!gameStart)
         {
-            gameManager.enemySpawner.SetActive(true);
+            //gameManager.enemySpawner.SetActive(true);
             gameStartTime = Time.time;
             //if (gameManager.wallOfDeath != null)
             //{
