@@ -30,7 +30,6 @@ public class TaserShooterExplosion : MonoBehaviour
             //explosionEffect.emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0.0f, pieces) }, 1);
             explosionEffect.Play();
             //Destroy(explosionEffect.gameObject);
-            Debug.Log("OnDestroy() Called!");
         }
     }
 }

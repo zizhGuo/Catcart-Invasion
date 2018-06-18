@@ -57,7 +57,8 @@ public class SetupLocalPlayers : NetworkBehaviour
         }
         if (isLocalPlayer && camerasMoving) // If this is running on the non-VR side
         {
-            transform.position = camerasMoving.GetComponent<ObjectsPlacer>().spawnPosition; // Non-VR player's position
+            //transform.position = camerasMoving.GetComponent<ObjectsPlacer>().spawnPosition; // Non-VR player's position
+            transform.position = GetComponent<TestClickerOnPlayer>().spawnPosition;
         }
     }
 

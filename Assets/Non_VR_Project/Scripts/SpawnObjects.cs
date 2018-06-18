@@ -262,7 +262,7 @@ public class SpawnObjects : NetworkBehaviour
             // ----------------------------------------------------------------------------------Get local Client Game Object
             if (gameManager == null) FindServerServer();
             if (serverClient == null) FindServerClient();
-            if (serverClient != null) Debug.Log("nonVRPlayerabc : "+ nonVRPlayer.abc);
+            //if (serverClient != null) Debug.Log("nonVRPlayerabc : "+ nonVRPlayer.abc);
 
             CmdSendPlayerShootingSignaltoServer(MultiShooter.isPlayerShoot);
             CmdSendShootingSignaltoServer(BeamCollision.multiIsShot);

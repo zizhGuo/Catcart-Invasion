@@ -29,7 +29,7 @@ public class NetworkLobby_NVR : NetworkManager {
             if (matches[i].name == "catcart")
             {
                 networkIDforCatcart = matches[i].networkId;
-                Debug.Log("Gotten ID: " + (System.UInt64)networkIDforCatcart);
+               // Debug.Log("Gotten ID: " + (System.UInt64)networkIDforCatcart);
                 _isMatchmaking = true;
                 matchMaker.JoinMatch(networkIDforCatcart, "", "", "", 0, 0, HandleJoinedMatch);
                 break;
@@ -39,7 +39,7 @@ public class NetworkLobby_NVR : NetworkManager {
     }
     public void HandleJoinedMatch(bool success, string extendedinfo, MatchInfo responsedata) {
         StartClient(responsedata);
-        Debug.Log("Joiend ID: " + (System.UInt64)responsedata.networkId);
+        //Debug.Log("Joiend ID: " + (System.UInt64)responsedata.networkId);
     }
 
     //public override void OnMatchJoined(bool success, string extendedInfo, MatchInfo matchInfo)

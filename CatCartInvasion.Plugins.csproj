@@ -189,6 +189,7 @@
     <None Include="Assets\Models\Items\Tools\Weapons\Pistol\BasicBeamShot\sh\Add_UVScroll_sh.shader" />
     <None Include="Assets\Models\Items\Tools\Weapons\Pistol\BasicBeamShot\sh\BeamLine_sh.shader" />
     <None Include="Assets\Models\Items\Tools\Weapons\Pistol\BasicBeamShot\sh\Sprite_Add_sh.shader" />
+    <None Include="Assets\Non_VR_Project\Shaders\Outlined_Diffuse.shader" />
     <None Include="Assets\ProCore\ProGrids\About\changelog.txt" />
     <None Include="Assets\ProCore\ProGrids\About\pc_AboutEntry_ProGrids.txt" />
     <None Include="Assets\ProCore\ProGrids\Shader\pg_GridShader.shader" />

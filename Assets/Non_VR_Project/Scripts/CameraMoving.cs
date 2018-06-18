@@ -79,11 +79,11 @@ public class CameraMoving : MonoBehaviour // Used for controlling camera to scro
         //    gameObject.transform.position = new Vector3(GMscript.KartScript.vrPlayer.transform.position.x, transform.position.y, GMscript.KartScript.vrPlayer.transform.position.z);
         //}
 
-        if (Input.GetMouseButton(1) && !isFollowPlayer)
-        {            
-            isFollowPlayer = true;
-        }
-        if (isFollowPlayer) gameObject.transform.position = new Vector3(vrPlayer.transform.position.x, transform.position.y, vrPlayer.transform.position.z);
+        //if (Input.GetMouseButton(1) && !isFollowPlayer)
+        //{            
+        //    isFollowPlayer = true;
+        //}
+        //if (isFollowPlayer) gameObject.transform.position = new Vector3(vrPlayer.transform.position.x, transform.position.y, vrPlayer.transform.position.z);
 
         if (isFollowPlayer)
         {
