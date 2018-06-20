@@ -47,6 +47,7 @@ public class InteractablePropsController : NetworkBehaviour
     public void FallEffect() {
         Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();
         rb.useGravity = true;
-        rb.AddForce(transform.forward * 1000f);
+        rb.AddForce(transform.forward * 2500f);
+        rb.AddForce(transform.up * 100f);
     }
 }
