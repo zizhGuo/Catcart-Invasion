@@ -23,13 +23,6 @@ public class PropsSpawn : NetworkBehaviour
 
     void Update()
     {
-        if (this.connectionToClient != null) {
-            Debug.Log("connectionToClient != null");
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //CmdSpawnProps();
-        }
         if (GameObject.Find("Non-VR player") && NVRPlayer == null) {
             NVRPlayer = GameObject.Find("Non-VR player");
             CmdSpawnProps(NVRPlayer);
@@ -38,8 +31,8 @@ public class PropsSpawn : NetworkBehaviour
 
     [Command]
     void CmdSpawnProps(GameObject player) {
-        Vector3 pos = new Vector3(-750f, 3f, 0f);
-        GameObject prop = Instantiate(testPropPrefab, pos, Quaternion.identity);
+        Vector3 pos = spawnPosition.transform.position;
+        GameObject prop = Instantiate(testPropPrefab, pos, spawnPosition.transform.rotation);
         //NetworkServer.Spawn(prop);
         NetworkServer.SpawnWithClientAuthority(prop, player);
     }
@@ -56,10 +49,6 @@ public class PropsSpawn : NetworkBehaviour
     }
     public override void OnStartServer() {
 
-        //GameObject prop = Instantiate(testPropPrefab, spawnPosition.transform.position, Quaternion.identity);
-        //NetworkServer.Spawn(prop);
-        //NetworkServer.SpawnWithClientAuthority(prop, this.connectionToClient)
-        //CmdSpawnProps();
         Debug.Log("OnStartServer!");
     }
     //public void OnClientConnect()
@@ -69,8 +58,6 @@ public class PropsSpawn : NetworkBehaviour
     //}
     public override void OnStartAuthority()
     {
-        //CmdSpawnProps();
         Debug.Log("OnStartAuthority!");
     }
-    //Coroutine SpawnProcess()
 }
