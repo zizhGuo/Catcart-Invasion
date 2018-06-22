@@ -15,8 +15,12 @@ public class InteractablePropsTrigger : NetworkBehaviour
     //[SerializeField] GameObject trapPrefab;
 
     public GameObject Lightning_Prefab;
+    public ParticleSystem SelectEffectPrefab1;
+    public GameObject SelectEffectPrefab2;
     [SerializeField] GameObject StartPointPrefab;
     [SerializeField] GameObject EndPointPrefab;
+    [SerializeField] ParticleSystem SelectEffect1;
+    [SerializeField] GameObject SelectEffect2;
 
     [SerializeField] float tempTimerDuration = 1f;
     [SerializeField] float tempTimeCurrent;
@@ -28,6 +32,12 @@ public class InteractablePropsTrigger : NetworkBehaviour
             mainCamera = FindObjectOfType<CameraMoving>().gameObject.GetComponent<Camera>();
         }
         tempTimeCurrent = Time.time;
+
+        SelectEffect1 = Instantiate(SelectEffectPrefab1) as ParticleSystem;
+        SelectEffect1.gameObject.SetActive(false);
+
+        SelectEffect2 = Instantiate(SelectEffectPrefab2) as GameObject;
+        SelectEffect2.gameObject.SetActive(false);
 
     }
 	
@@ -44,6 +54,8 @@ public class InteractablePropsTrigger : NetworkBehaviour
             Debug.DrawLine(ray.origin, ray.origin + ray.direction * 1000, Color.red);
             if (_hit)
             {
+                hit.transform.SendMessage("HitByRay");
+
                 Debug.DrawLine(mainCamera.transform.position, hit.point, Color.yellow);
                 if (hit.transform.name == "Sphere-Interactable(Clone)" && Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration)
                 {
@@ -65,16 +77,41 @@ public class InteractablePropsTrigger : NetworkBehaviour
 
                 }
 
-                if (hit.transform.name == "StreetLamp(Clone)" && Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration) {
-                    Debug.Log("HIt the StreetLamp(Clone)!");
-                    tempTimeCurrent = Time.time;
-                    var _startPoint = Instantiate(StartPointPrefab);
-                    _startPoint.transform.position = mainCamera.transform.GetChild(0).transform.position;
-                    var _endPoint = Instantiate(EndPointPrefab);
-                    _endPoint.transform.position = hit.transform.position;
-                    SpawnLightning(Lightning_Prefab, _startPoint, _endPoint, this.gameObject);
-                    //hit.transform.gameObject.GetComponent<InteractablePropsController>().DoMove();
-                    hit.transform.gameObject.GetComponent<InteractablePropsController>().FallEffect();
+                if (hit.transform.name == "StreetLamp(Clone)" ){
+                    //var streeLampScript = hit.transform.gameObject.GetComponent<InteractablePropsController>();
+                    //streeLampScript.SelectEffect(hit.transform.gameObject, streeLampScript.selectEffect);
+                    ActivateSelectEffect(SelectEffect2, hit.transform.gameObject);
+
+                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration) {
+                        Debug.Log("HIt the StreetLamp(Clone)!");
+                        tempTimeCurrent = Time.time;
+                        var _startPoint = Instantiate(StartPointPrefab);
+                        _startPoint.transform.position = mainCamera.transform.GetChild(0).transform.position;
+                        var _endPoint = Instantiate(EndPointPrefab);
+                        _endPoint.transform.position = hit.transform.position;
+                        SpawnLightning(Lightning_Prefab, _startPoint, _endPoint, this.gameObject);
+                        StartCoroutine(WaitForLightningStrike(hit.transform.gameObject));
+                        //hit.transform.gameObject.GetComponent<InteractablePropsController>().DoMove();
+                        //hit.transform.gameObject.GetComponent<InteractablePropsController>().FallEffect();
+                    }
+
+                }
+                    
+                else {
+                    //if (hit.transform.gameObject.GetComponent<InteractablePropsController>()) {
+                    //    var streeLampScript = hit.transform.gameObject.GetComponent<InteractablePropsController>();
+                    //    streeLampScript.DisableSelectEffect(streeLampScript.selectEffect);
+                    //}
+                    DisactivateSelectEffect(SelectEffect2);
+                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration)
+                    {
+                        tempTimeCurrent = Time.time;
+                        var _startPoint = Instantiate(StartPointPrefab);
+                        _startPoint.transform.position = mainCamera.transform.GetChild(0).transform.position;
+                        var _endPoint = Instantiate(EndPointPrefab);
+                        _endPoint.transform.position = spawnPosition;
+                        SpawnLightning(Lightning_Prefab, _startPoint, _endPoint, this.gameObject);
+                    }                        
                 }
             }
             
@@ -90,5 +127,22 @@ public class InteractablePropsTrigger : NetworkBehaviour
         controller.Destination = _endPoint.gameObject;
         //NetworkServer.SpawnWithClientAuthority(_lightning, player);
 
+    }
+
+    void ActivateSelectEffect(GameObject se, GameObject go) {
+        se.gameObject.SetActive(true);
+        se.transform.position = go.transform.position;
+    }
+    void DisactivateSelectEffect(GameObject se)
+    {
+        se.gameObject.SetActive(false);
+    }
+
+    private IEnumerator WaitForLightningStrike(GameObject ob)
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (ob.GetComponent<InteractablePropsController>()) {
+            ob.GetComponent<InteractablePropsController>().FallEffect();
+        }
     }
 }

@@ -202,6 +202,7 @@
     <None Include="Assets\Non_VR_Project\Plugins\ProceduralLightning\Prefab\Materials\LightningBoltShaderMesh.shader" />
     <None Include="Assets\Non_VR_Project\Plugins\ProceduralLightning\Prefab\Materials\LightningBoltShaderMeshNoGlow.shader" />
     <None Include="Assets\Non_VR_Project\Plugins\ProceduralLightning\Readme.txt" />
+    <None Include="Assets\Non_VR_Project\Shaders\Outline.shader" />
     <None Include="Assets\Non_VR_Project\Shaders\Outlined_Diffuse.shader" />
     <None Include="Assets\ProCore\ProGrids\About\changelog.txt" />
     <None Include="Assets\ProCore\ProGrids\About\pc_AboutEntry_ProGrids.txt" />

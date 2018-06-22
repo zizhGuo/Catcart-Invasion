@@ -9,16 +9,26 @@ public class InteractablePropsController : NetworkBehaviour
 
     [SerializeField] public GameObject trapPrefab;
     [SerializeField] GameObject NVRPlayer;
+    [SerializeField] public ParticleSystem selectEffect;
     // Use this for initialization
     void Start () {
-		
-	}
+        //selectEffect = Instantiate(selectEffect) as ParticleSystem;
+        //selectEffect.gameObject.SetActive(false);
+    }
+    //void HitByRay() {
+    //    selectEffect.gameObject.SetActive(true);
+    //    selectEffect.transform.position = this.gameObject.transform.position;
+    //}
+
+    void Update()
+    {
+    }
 
     [Command]
     public void CmdDeactivated()
     {
         Debug.Log("CmdDeactivated on itself!");
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);       
     }
     [Command]
     public void CmdDoDebug()
@@ -31,8 +41,7 @@ public class InteractablePropsController : NetworkBehaviour
         gameObject.SetActive(false);
     }
     // Update is called once per frame
-    void Update () {
-    }
+
 
     public void DoMove() {
         this.transform.Translate(1, 0, 0);
@@ -44,10 +53,17 @@ public class InteractablePropsController : NetworkBehaviour
         GameObject trap = Instantiate(trapPrefab, trigger.transform.position, trigger.transform.rotation);
         NetworkServer.SpawnWithClientAuthority(trap, player);
     }
+
+    public GameObject GetPropScript() {
+        return this.gameObject;
+    }
     public void FallEffect() {
         Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();
         rb.useGravity = true;
-        rb.AddForce(transform.forward * 2500f);
-        rb.AddForce(transform.up * 100f);
+        //rb.AddForce(transform.right*-1 * 1000f);
+        //rb.AddForce(transform.forward * -1 * 1000f);
+        //rb.AddForce(transform.up * 1000f);
+        rb.AddForceAtPosition(transform.right * -1 * 1000f, new Vector3(rb.transform.position.x, rb.transform.position.y + 10, rb.transform.position.z));
     }
+            
 }

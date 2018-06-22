@@ -58,6 +58,26 @@ public class CameraMoving : MonoBehaviour // Used for controlling camera to scro
                 isFollowPlayer = false;
             }
             transform.position = pos;
+        if (transform.position.y > 50 && transform.position.y < 100)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + panSpeed * 10 * Time.deltaTime, transform.position.z);
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - panSpeed * 10 * Time.deltaTime, transform.position.z);
+            }
+        }
+        else if (transform.position.y <= 50)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + panSpeed * 10 * Time.deltaTime, transform.position.z);
+        }
+        else {
+            transform.position = new Vector3(transform.position.x, transform.position.y - panSpeed * 10 * Time.deltaTime, transform.position.z);
+        }
+
+
 
 
 

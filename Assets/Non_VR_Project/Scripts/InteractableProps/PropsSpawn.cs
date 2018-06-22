@@ -25,16 +25,23 @@ public class PropsSpawn : NetworkBehaviour
     {
         if (GameObject.Find("Non-VR player") && NVRPlayer == null) {
             NVRPlayer = GameObject.Find("Non-VR player");
-            CmdSpawnProps(NVRPlayer);
+            GameObject[] Spawners = GameObject.FindGameObjectsWithTag("InteractableSpawner");
+            CmdSpawnProps(NVRPlayer, Spawners);                     
         }
     }
 
     [Command]
-    void CmdSpawnProps(GameObject player) {
-        Vector3 pos = spawnPosition.transform.position;
-        GameObject prop = Instantiate(testPropPrefab, pos, spawnPosition.transform.rotation);
+    void CmdSpawnProps(GameObject player, GameObject[] spawners) {
+
+        for (int i = 0; i < spawners.Length; i++) {
+            Vector3 pos = spawners[i].transform.position;
+            GameObject prop = Instantiate(testPropPrefab, pos, spawnPosition.transform.rotation);
+            NetworkServer.SpawnWithClientAuthority(prop, player);
+        }
+        //Vector3 pos = spawnPosition.transform.position;
+        //GameObject prop = Instantiate(testPropPrefab, pos, spawnPosition.transform.rotation);
         //NetworkServer.Spawn(prop);
-        NetworkServer.SpawnWithClientAuthority(prop, player);
+        //NetworkServer.SpawnWithClientAuthority(prop, player);
     }
 
     void OnPlayerConnected(NetworkPlayer player)
