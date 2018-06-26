@@ -10,7 +10,7 @@ public class InteractablePropsTrigger : NetworkBehaviour
     Vector3 mousePos;
     bool _hit;
     RaycastHit hit;
-    public Vector3 spawnPosition; // Used as an argument to transfer the position of spawnable game obejcts
+    
     int layerMask;
     //[SerializeField] GameObject trapPrefab;
 
@@ -19,13 +19,28 @@ public class InteractablePropsTrigger : NetworkBehaviour
     public GameObject SelectEffectPrefab2;
     [SerializeField] GameObject StartPointPrefab;
     [SerializeField] GameObject EndPointPrefab;
-    [SerializeField] ParticleSystem SelectEffect1;
+    [SerializeField] ParticleSystem SelectEffect1; // obselete
     [SerializeField] GameObject SelectEffect2;
 
     [SerializeField] float tempTimerDuration = 1f;
     [SerializeField] float tempTimeCurrent;
+    [SerializeField] public Vector3 cameraPos_NVR;
+    [SerializeField] public Vector3 spawnPosition; // Used as an argument to transfer the position of spawnable game obejcts
+    [SerializeField] public bool isLightning_NVR;
+    bool _lightStrikeLock = true;
+    float _lightStrikeCurrentTime;
 
-
+    [SyncVar] bool VR_lightning;
+    [SyncVar] public Vector3 cameraPos_VR;
+    [SyncVar] public Vector3 spawnPosition_VR;
+    [SyncVar] bool isLightning_VR;
+    [Command]
+    void CmdSyncLightningPos(Vector3 a, Vector3 b, bool c)
+    {
+        this.cameraPos_VR = a;
+        this.spawnPosition_VR = b;
+        this.isLightning_VR = c;
+    }
     // Use this for initialization
     void Start () {
         if (FindObjectOfType<CameraMoving>()) {
@@ -38,19 +53,54 @@ public class InteractablePropsTrigger : NetworkBehaviour
 
         SelectEffect2 = Instantiate(SelectEffectPrefab2) as GameObject;
         SelectEffect2.gameObject.SetActive(false);
+        isLightning_NVR = false;
 
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (!isLocalPlayer && isServer) {
+
+            if (isLightning_VR)
+            {
+                var _startPoint = Instantiate(StartPointPrefab);
+                _startPoint.transform.position = cameraPos_VR;
+
+                var _endPoint = Instantiate(EndPointPrefab);
+                _endPoint.transform.position = spawnPosition_VR;
+
+                SpawnLightning(Lightning_Prefab, _startPoint, _endPoint, this.gameObject);
+            }
+
+            Debug.Log("Camera Position from NVR: " + cameraPos_VR);
+            Debug.Log("Spawning Position from NVR: " + spawnPosition_VR);
+        }
         if (isLocalPlayer && !isServer)
         {
             mousePos = Input.mousePosition;
             Ray ray = mainCamera.ScreenPointToRay(mousePos);
             _hit = Physics.Raycast(ray, out hit, float.MaxValue);
+
+            //Update the positions of camera or spawn position
+            cameraPos_NVR = mainCamera.transform.position;
             spawnPosition = new Vector3(hit.point.x, 0f, hit.point.z);
-            
+            CmdSyncLightningPos(cameraPos_NVR, spawnPosition, isLightning_NVR);
+
+            if (isLightning_NVR) {
+
+                if (_lightStrikeLock)
+                {
+                    _lightStrikeCurrentTime = Time.time;
+                    _lightStrikeLock = false;
+                }
+                if (Time.time - _lightStrikeCurrentTime > 5 * Time.deltaTime)
+                {
+                    isLightning_NVR = false;
+                    _lightStrikeLock = true;
+                }
+            }
+
             Debug.DrawLine(ray.origin, ray.origin + ray.direction * 1000, Color.red);
             if (_hit)
             {
@@ -82,7 +132,9 @@ public class InteractablePropsTrigger : NetworkBehaviour
                     //streeLampScript.SelectEffect(hit.transform.gameObject, streeLampScript.selectEffect);
                     ActivateSelectEffect(SelectEffect2, hit.transform.gameObject);
 
-                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration) {
+                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration && !isLightning_NVR) {
+
+                        isLightning_NVR = true;
                         Debug.Log("HIt the StreetLamp(Clone)!");
                         tempTimeCurrent = Time.time;
                         var _startPoint = Instantiate(StartPointPrefab);
@@ -144,5 +196,9 @@ public class InteractablePropsTrigger : NetworkBehaviour
         if (ob.GetComponent<InteractablePropsController>()) {
             ob.GetComponent<InteractablePropsController>().FallEffect();
         }
+    }
+    private IEnumerator WaitForLightningTrigger()
+    {
+        yield return new WaitForSeconds(2f);
     }
 }

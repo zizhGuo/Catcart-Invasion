@@ -194,6 +194,7 @@
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
+    <Compile Include="Assets\Non_VR_Project\Plugins\Low Poly Animated People\RandomAnimationPicker.cs" />
     <Compile Include="Assets\Non_VR_Project\Plugins\ProceduralLightning\Demo\Scripts\DemoConfigureScript.cs" />
     <Compile Include="Assets\Non_VR_Project\Plugins\ProceduralLightning\Demo\Scripts\DemoMeshScript.cs" />
     <Compile Include="Assets\Non_VR_Project\Plugins\ProceduralLightning\Demo\Scripts\DemoPathScript.cs" />
