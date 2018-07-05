@@ -244,6 +244,7 @@
     <Compile Include="Assets\Non_VR_Project\Scripts\EnemyRenederer.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\FeedbackManager.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\InitiateObjects.cs" />
+    <Compile Include="Assets\Non_VR_Project\Scripts\InteractableProps\CatsLostBehaviour.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\InteractableProps\HightlightProps.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\InteractableProps\InteractablePropsController.cs" />
     <Compile Include="Assets\Non_VR_Project\Scripts\InteractableProps\InteractablePropsTrigger.cs" />

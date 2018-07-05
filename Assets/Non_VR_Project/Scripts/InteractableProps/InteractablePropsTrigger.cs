@@ -22,7 +22,7 @@ public class InteractablePropsTrigger : NetworkBehaviour
     [SerializeField] ParticleSystem SelectEffect1; // obselete
     [SerializeField] GameObject SelectEffect2;
 
-    [SerializeField] float tempTimerDuration = 1f;
+    [SerializeField] float tempTimerDuration = 1f; // Lighgting Triggering Cool-Down Time
     [SerializeField] float tempTimeCurrent;
     [SerializeField] public Vector3 cameraPos_NVR;
     [SerializeField] public Vector3 spawnPosition; // Used as an argument to transfer the position of spawnable game obejcts
@@ -35,7 +35,7 @@ public class InteractablePropsTrigger : NetworkBehaviour
     [SyncVar] public Vector3 spawnPosition_VR;
     [SyncVar] bool isLightning_VR;
     [Command]
-    void CmdSyncLightningPos(Vector3 a, Vector3 b, bool c)
+    void CmdSyncLightningPos(Vector3 a, Vector3 b, bool c) // Send the position of spawned Lightning strike to server
     {
         this.cameraPos_VR = a;
         this.spawnPosition_VR = b;
@@ -60,9 +60,9 @@ public class InteractablePropsTrigger : NetworkBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!isLocalPlayer && isServer) {
+        if (!isLocalPlayer && isServer) { // VR side
 
-            if (isLightning_VR)
+            if (isLightning_VR) // Sychronized the lightning strike in VR scene
             {
                 var _startPoint = Instantiate(StartPointPrefab);
                 _startPoint.transform.position = cameraPos_VR;
@@ -73,21 +73,21 @@ public class InteractablePropsTrigger : NetworkBehaviour
                 SpawnLightning(Lightning_Prefab, _startPoint, _endPoint, this.gameObject);
             }
 
-            Debug.Log("Camera Position from NVR: " + cameraPos_VR);
-            Debug.Log("Spawning Position from NVR: " + spawnPosition_VR);
+            //Debug.Log("Camera Position from NVR: " + cameraPos_VR);
+            //Debug.Log("Spawning Position from NVR: " + spawnPosition_VR);
         }
-        if (isLocalPlayer && !isServer)
+        if (isLocalPlayer && !isServer) // Non-VR side
         {
             mousePos = Input.mousePosition;
             Ray ray = mainCamera.ScreenPointToRay(mousePos);
             _hit = Physics.Raycast(ray, out hit, float.MaxValue);
 
             //Update the positions of camera or spawn position
-            cameraPos_NVR = mainCamera.transform.position;
-            spawnPosition = new Vector3(hit.point.x, 0f, hit.point.z);
+            cameraPos_NVR = mainCamera.transform.position;                 // Camera Position
+            spawnPosition = new Vector3(hit.point.x, 0f, hit.point.z);     // Spawn Point Position
             CmdSyncLightningPos(cameraPos_NVR, spawnPosition, isLightning_NVR);
-
-            if (isLightning_NVR) {
+            if (isLightning_NVR)
+            { // Lighting Lock to extend striking time in VR scene
 
                 if (_lightStrikeLock)
                 {
@@ -135,6 +135,7 @@ public class InteractablePropsTrigger : NetworkBehaviour
                     if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration && !isLightning_NVR) {
 
                         isLightning_NVR = true;
+                        
                         Debug.Log("HIt the StreetLamp(Clone)!");
                         tempTimeCurrent = Time.time;
                         var _startPoint = Instantiate(StartPointPrefab);
@@ -148,7 +149,32 @@ public class InteractablePropsTrigger : NetworkBehaviour
                     }
 
                 }
-                    
+
+                else if (hit.transform.name == "Lamp_Hammer(Clone)")
+                {
+                    //var streeLampScript = hit.transform.gameObject.GetComponent<InteractablePropsController>();
+                    //streeLampScript.SelectEffect(hit.transform.gameObject, streeLampScript.selectEffect);
+                    ActivateSelectEffect(SelectEffect2, hit.transform.gameObject);
+
+                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration && !isLightning_NVR)
+                    {
+
+                        isLightning_NVR = true;
+                        CmdSyncLightningPos(cameraPos_NVR, spawnPosition, isLightning_NVR);
+                        //Debug.Log("HIt the Hammer!!!!");
+                        tempTimeCurrent = Time.time;
+                        var _startPoint = Instantiate(StartPointPrefab);
+                        _startPoint.transform.position = mainCamera.transform.GetChild(0).transform.position;
+                        var _endPoint = Instantiate(EndPointPrefab);
+                        _endPoint.transform.position = hit.transform.GetChild(0).transform.position;
+                        SpawnLightning(Lightning_Prefab, _startPoint, _endPoint, this.gameObject);
+                        StartCoroutine(WaitForLightningStrike(hit.transform.gameObject));
+                        //hit.transform.gameObject.GetComponent<InteractablePropsController>().DoMove();
+                        //hit.transform.gameObject.GetComponent<InteractablePropsController>().FallEffect();
+                    }
+
+                }
+
                 else {
                     //if (hit.transform.gameObject.GetComponent<InteractablePropsController>()) {
                     //    var streeLampScript = hit.transform.gameObject.GetComponent<InteractablePropsController>();
@@ -184,6 +210,10 @@ public class InteractablePropsTrigger : NetworkBehaviour
     void ActivateSelectEffect(GameObject se, GameObject go) {
         se.gameObject.SetActive(true);
         se.transform.position = go.transform.position;
+        if (go.transform.name == "Lamp_Hammer(Clone)")
+        {
+            se.transform.position = go.transform.GetChild(0).transform.position;   // Put the select effect pos to the flag pos
+        }
     }
     void DisactivateSelectEffect(GameObject se)
     {
@@ -193,10 +223,16 @@ public class InteractablePropsTrigger : NetworkBehaviour
     private IEnumerator WaitForLightningStrike(GameObject ob)
     {
         yield return new WaitForSeconds(0.2f);
-        if (ob.GetComponent<InteractablePropsController>()) {
+        if (ob.GetComponent<InteractablePropsController>() && ob.name == "StreetLamp(Clone)") {
             ob.GetComponent<InteractablePropsController>().FallEffect();
         }
+        if (ob.GetComponent<InteractablePropsController>() && ob.name == "Lamp_Hammer(Clone)")
+        {
+            ob.GetComponent<InteractablePropsController>().TestIFGettested();
+            ob.GetComponent<InteractablePropsController>().DetectHummerAround();
+        }
     }
+
     private IEnumerator WaitForLightningTrigger()
     {
         yield return new WaitForSeconds(2f);
