@@ -11,6 +11,10 @@ public class PropsSpawn : NetworkBehaviour
     private GameObject TrafficLightsPrefab;
     [SerializeField]
     private GameObject HummerPrefab;
+    [SerializeField]
+    private GameObject RoverPreb;
+    [SerializeField]
+    private GameObject TrafficLightsPrefab_Rover;
 
     GameObject NVRPlayer = null;
 
@@ -29,10 +33,25 @@ public class PropsSpawn : NetworkBehaviour
             NVRPlayer = GameObject.Find("Non-VR player");
             GameObject[] Spawners = GameObject.FindGameObjectsWithTag("InteractableSpawner");
             CmdSpawnProps(NVRPlayer, Spawners);
+            foreach (GameObject Spawner in Spawners) {
+                Spawner.GetComponent<MeshRenderer>().enabled = false;
+            }
 
             GameObject[] Spawners_Traffic = GameObject.FindGameObjectsWithTag("InteractableTrafficSpawner");
             CmdSpawnProps_Traffic(NVRPlayer, Spawners_Traffic);
+            foreach (GameObject Spawner in Spawners_Traffic)
+            {
+                Spawner.GetComponent<MeshRenderer>().enabled = false;
+                Spawner.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            }
 
+            GameObject[] Spawners_Traffic_Rover = GameObject.FindGameObjectsWithTag("InteractableTrafficSpawnerRover");
+            CmdSpawnProps_Traffic_Rover(NVRPlayer, Spawners_Traffic_Rover);
+            foreach (GameObject Spawner in Spawners_Traffic_Rover)
+            {
+                Spawner.GetComponent<MeshRenderer>().enabled = false;
+                Spawner.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            }
 
         }
     }
@@ -78,6 +97,25 @@ public class PropsSpawn : NetworkBehaviour
             //RpcShowNetID();
             //RpcMakeAsChild(Car, Car.transform.parent.gameObject);
             //GameGameObject.Find
+        }
+    }
+
+    [Command]
+    void CmdSpawnProps_Traffic_Rover(GameObject player, GameObject[] spawners)
+    {
+        //Debug.Log("tRY TO SPAWN traiffic lights");
+        for (int i = 0; i < spawners.Length; i++)
+        {
+            Vector3 pos = spawners[i].transform.position;
+            Quaternion rot = spawners[i].transform.rotation;
+            GameObject prop = Instantiate(TrafficLightsPrefab_Rover, pos, rot);
+            NetworkServer.SpawnWithClientAuthority(prop, player);
+
+            Vector3 posCar = spawners[i].transform.GetChild(0).transform.position;
+            Quaternion rotCar = spawners[i].transform.GetChild(0).transform.rotation;
+            GameObject Car = Instantiate(RoverPreb, posCar, rotCar);          
+            NetworkServer.SpawnWithClientAuthority(Car, player);
+   
         }
     }
     [Command]

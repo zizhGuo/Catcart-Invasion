@@ -21,8 +21,17 @@ public class CatsLostBehaviour : MonoBehaviour {
         {
             Debug.Log("Hit by the hummer!");
             ifHit = true;
-
-            //GameObject.FindWithTag("Cat");
+            int i = 0;
+            GameObject[] cats = GameObject.FindGameObjectsWithTag("Cat");
+            foreach (GameObject cat in cats)
+            {
+                if (cat.name.Contains("PlayerCats"))
+                {
+                    Debug.Log("Cat's name: " + cat.name + " " + i);
+                    cat.gameObject.SetActive(false);
+                    break;
+                }
+            }
         }
     }
 }

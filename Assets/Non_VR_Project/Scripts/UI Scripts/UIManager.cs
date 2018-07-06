@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
     private bool isParticleAllowed = true;
     private float particle_Counter;
 
+    private int catsCount_LoseCats = 9;
+    public ParticleSystem ExplosionCatsLost;
+
     void Start()
     {
         if (waypointManagerScript == null) {
@@ -116,8 +119,29 @@ public class UIManager : MonoBehaviour
                     isParticleAllowed = true;
                 }
 
-            }
 
+            }
+            //
+            if (spawnobjectNVR.catsCount < catsCount_LoseCats)
+            {
+                if (isParticleAllowed)
+                {
+                    particle_Counter = Time.time;
+
+                    ParticleSystem explosionEffect = Instantiate(ExplosionCatsLost) as ParticleSystem;
+                    explosionEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                    explosionEffect.transform.position = spawnobjectNVR.transform.position;
+                    explosionEffect.Play();
+
+                    isParticleAllowed = false;
+                }
+                if (Time.time - particle_Counter > 49 * Time.deltaTime)
+                {
+                    isParticleAllowed = true;
+                }
+                catsCount_LoseCats = spawnobjectNVR.catsCount;
+            }
+            //
             //if (spawnobjectNVR.isPlayerShoot) {
 
             //    // Shooting behavior

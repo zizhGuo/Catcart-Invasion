@@ -93,7 +93,7 @@ public class InteractablePropsController : NetworkBehaviour
 
     public void DetectHummerAround()
     {
-        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale * 100, Quaternion.identity);
+        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale * 25, Quaternion.identity);
         int i = 0;
         while (i < hitColliders.Length)
         {
@@ -109,11 +109,41 @@ public class InteractablePropsController : NetworkBehaviour
             }
         }
     }
+
+    public void DetectRoverAround()
+    {
+        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale * 25, Quaternion.identity);
+        int i = 0;
+        while (i < hitColliders.Length)
+        {
+            //Output all of the collider names
+            //Debug.Log("Hit : " + hitColliders[i].name + i);
+            //Increase the number of Colliders in the array
+            i++;
+            if (hitColliders[i].name == "rangeRover(Clone)")
+            {
+                Debug.Log("Hit : " + hitColliders[i].name + i);
+                Debug.Log("Found the Rover!");
+                hitColliders[i].transform.gameObject.GetComponent<InteractablePropsController>().GoFoward();
+                break;
+            }
+        }
+    }
     public void GoFoward() {
         // this.transform.Translate(-Vector3.right);
         var pos = this.transform.position;
-        this.transform.DOMove(new Vector3(pos.x+(-Vector3.forward.x)*25, pos.y + (-Vector3.forward.y)*25, pos.z + (-Vector3.forward.z)*25), 1f).SetEase(Ease.InOutQuad);
+        //this.transform.DOMove(new Vector3(pos.x+(-Vector3.forward.x)*25, pos.y + (-Vector3.forward.y)*25, pos.z + (-Vector3.forward.z)*25), 1f).SetEase(Ease.InOutQuad);
+        this.transform.DOMove(this.transform.GetChild(0).transform.position, 1f).SetEase(Ease.InOutQuad);
         Debug.Log("GoForward function called!");
+    }
+    [Command]
+    public void CmdChangetTrafficLightsColor() {
+        this.gameObject.transform.GetChild(3).GetComponent<Light>().intensity = 6;
+        this.gameObject.transform.GetChild(4).GetComponent<Light>().intensity = 0;
+        this.gameObject.transform.GetChild(5).GetComponent<Light>().intensity = 6;
+        this.gameObject.transform.GetChild(6).GetComponent<Light>().intensity = 0;
+        this.gameObject.transform.GetChild(8).GetComponent<Light>().intensity = 0;
+        this.gameObject.transform.GetChild(9).GetComponent<Light>().intensity = 6;
     }
 
 }

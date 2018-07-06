@@ -310,9 +310,9 @@ public class SpawnObjects : NetworkBehaviour
             if (playerWeapon != null && laserPointer != null) {
                 if (playerWeapon.transform.parent != null)
                 {
-                    Debug.Log("Weapon's name: " + playerWeapon.name);
-                    Debug.Log("Parent's name: " + playerWeapon.parent.name);
-                    Debug.Log("Player weapon's parent rotation : " + playerWeapon.rotation.eulerAngles);
+                    //Debug.Log("Weapon's name: " + playerWeapon.name);
+                    //Debug.Log("Parent's name: " + playerWeapon.parent.name);
+                    //Debug.Log("Player weapon's parent rotation : " + playerWeapon.rotation.eulerAngles);
                     CmdSendWeaponLaserInfo(playerWeapon.parent.transform.position, playerWeapon.parent.transform.rotation, laserPointer.position, laserPointer.rotation);
                 }
                 //CmdSendWeaponLaserInfo(playerWeapon.position, playerWeapon.rotation, laserPointer.position, laserPointer.rotation);

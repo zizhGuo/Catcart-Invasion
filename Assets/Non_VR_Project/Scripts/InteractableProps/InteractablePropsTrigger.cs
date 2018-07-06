@@ -104,7 +104,7 @@ public class InteractablePropsTrigger : NetworkBehaviour
             Debug.DrawLine(ray.origin, ray.origin + ray.direction * 1000, Color.red);
             if (_hit)
             {
-                hit.transform.SendMessage("HitByRay");
+                //hit.transform.SendMessage("HitByRay");
 
                 Debug.DrawLine(mainCamera.transform.position, hit.point, Color.yellow);
                 if (hit.transform.name == "Sphere-Interactable(Clone)" && Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration)
@@ -127,15 +127,17 @@ public class InteractablePropsTrigger : NetworkBehaviour
 
                 }
 
-                if (hit.transform.name == "StreetLamp(Clone)" ){
+                if (hit.transform.name == "StreetLamp(Clone)")
+                {
                     //var streeLampScript = hit.transform.gameObject.GetComponent<InteractablePropsController>();
                     //streeLampScript.SelectEffect(hit.transform.gameObject, streeLampScript.selectEffect);
                     ActivateSelectEffect(SelectEffect2, hit.transform.gameObject);
 
-                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration && !isLightning_NVR) {
+                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration && !isLightning_NVR)
+                    {
 
                         isLightning_NVR = true;
-                        
+
                         Debug.Log("HIt the StreetLamp(Clone)!");
                         tempTimeCurrent = Time.time;
                         var _startPoint = Instantiate(StartPointPrefab);
@@ -151,6 +153,32 @@ public class InteractablePropsTrigger : NetworkBehaviour
                 }
 
                 else if (hit.transform.name == "Lamp_Hammer(Clone)")
+                {
+                    //var streeLampScript = hit.transform.gameObject.GetComponent<InteractablePropsController>();
+                    //streeLampScript.SelectEffect(hit.transform.gameObject, streeLampScript.selectEffect);
+                    ActivateSelectEffect(SelectEffect2, hit.transform.gameObject);
+
+                    if (Input.GetKey(KeyCode.Mouse1) && Time.time - tempTimeCurrent > tempTimerDuration && !isLightning_NVR)
+                    {
+
+                        isLightning_NVR = true;
+                        CmdSyncLightningPos(cameraPos_NVR, spawnPosition, isLightning_NVR);
+                        //Debug.Log("HIt the Hammer!!!!");
+                        tempTimeCurrent = Time.time;
+                        var _startPoint = Instantiate(StartPointPrefab);
+                        _startPoint.transform.position = mainCamera.transform.GetChild(0).transform.position;
+                        var _endPoint = Instantiate(EndPointPrefab);
+                        _endPoint.transform.position = hit.transform.GetChild(0).transform.position;
+                        SpawnLightning(Lightning_Prefab, _startPoint, _endPoint, this.gameObject);
+                        StartCoroutine(WaitForLightningStrike(hit.transform.gameObject));
+                        //hit.transform.gameObject.GetComponent<InteractablePropsController>().DoMove();
+                        //hit.transform.gameObject.GetComponent<InteractablePropsController>().FallEffect();
+                    }
+
+                }
+
+
+                else if (hit.transform.name == "Lamp_Rover(Clone)")
                 {
                     //var streeLampScript = hit.transform.gameObject.GetComponent<InteractablePropsController>();
                     //streeLampScript.SelectEffect(hit.transform.gameObject, streeLampScript.selectEffect);
@@ -214,6 +242,10 @@ public class InteractablePropsTrigger : NetworkBehaviour
         {
             se.transform.position = go.transform.GetChild(0).transform.position;   // Put the select effect pos to the flag pos
         }
+        if (go.transform.name == "Lamp_Rover(Clone)")
+        {
+            se.transform.position = go.transform.GetChild(0).transform.position;   // Put the select effect pos to the flag pos
+        }
     }
     void DisactivateSelectEffect(GameObject se)
     {
@@ -228,13 +260,32 @@ public class InteractablePropsTrigger : NetworkBehaviour
         }
         if (ob.GetComponent<InteractablePropsController>() && ob.name == "Lamp_Hammer(Clone)")
         {
-            ob.GetComponent<InteractablePropsController>().TestIFGettested();
+            //ob.GetComponent<InteractablePropsController>().TestIFGettested();
+            ob.GetComponent<InteractablePropsController>().CmdChangetTrafficLightsColor();  // Change the Traffic lights color on server
+            ChangetTrafficLightsColor_VR(ob.gameObject);                                    // Change the Traffic lights color locally
             ob.GetComponent<InteractablePropsController>().DetectHummerAround();
+        }
+        if (ob.GetComponent<InteractablePropsController>() && ob.name == "Lamp_Rover(Clone)")
+        {
+            ob.GetComponent<InteractablePropsController>().CmdChangetTrafficLightsColor();
+            ChangetTrafficLightsColor_VR(ob.gameObject);
+            ob.GetComponent<InteractablePropsController>().TestIFGettested();
+            ob.GetComponent<InteractablePropsController>().DetectRoverAround();
         }
     }
 
     private IEnumerator WaitForLightningTrigger()
     {
         yield return new WaitForSeconds(2f);
+    }
+
+    public void ChangetTrafficLightsColor_VR(GameObject ob)
+    {
+        ob.transform.GetChild(3).GetComponent<Light>().intensity = 6;
+        ob.transform.GetChild(4).GetComponent<Light>().intensity = 0;
+        ob.transform.GetChild(5).GetComponent<Light>().intensity = 6;
+        ob.transform.GetChild(6).GetComponent<Light>().intensity = 0;
+        ob.transform.GetChild(8).GetComponent<Light>().intensity = 0;
+        ob.transform.GetChild(9).GetComponent<Light>().intensity = 6;
     }
 }
