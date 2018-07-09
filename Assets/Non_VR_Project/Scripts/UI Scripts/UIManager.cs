@@ -127,7 +127,7 @@ public class UIManager : MonoBehaviour
                 if (isParticleAllowed)
                 {
                     particle_Counter = Time.time;
-
+                    Debug.Log("Cats Lost Puff!!!!!!!");
                     ParticleSystem explosionEffect = Instantiate(ExplosionCatsLost) as ParticleSystem;
                     explosionEffect.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
                     explosionEffect.transform.position = spawnobjectNVR.transform.position;
