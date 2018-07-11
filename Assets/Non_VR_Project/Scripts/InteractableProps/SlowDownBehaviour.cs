@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlowDownBehaviour : MonoBehaviour {
 
-    [SerializeField] float shockLastingTime = 5f;
+    [SerializeField] float shockLastingTime = 3f;
     [SerializeField] ParticleSystem shockParticle;
     [SerializeField] bool exploded;
     // Use this for initialization
