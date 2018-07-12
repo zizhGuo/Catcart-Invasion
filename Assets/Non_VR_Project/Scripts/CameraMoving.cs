@@ -78,7 +78,10 @@ public class CameraMoving : MonoBehaviour // Used for controlling camera to scro
         }
 
 
-
+        if (vrPlayer != null && Input.GetKey(KeyCode.Space))
+        { 
+            gameObject.transform.position = new Vector3(vrPlayer.transform.position.x, transform.position.y, vrPlayer.transform.position.z);
+        }
 
 
 

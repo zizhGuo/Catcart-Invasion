@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RadialProgressClass Catcher;
     [SerializeField] private RadialProgressClass FallingDriller;
     [SerializeField] private RadialProgressClass DrillerTrap;
+    //[SerializeField] private RadialProgressClass LightningStrike; // Lightning Strike
     [SerializeField] private HoroProgressClass Spawn_Points;
     [SerializeField] private ScoreUpdate ScoreClass;
     [SerializeField] private HealthBarClass kittiesBar;
@@ -24,6 +25,7 @@ public class UIManager : MonoBehaviour
     public ParticleSystem ExplosionParticleSystem;
     private SpawnObjects spawnobject;
     private SpawnObjects spawnobjectNVR;
+    private InteractablePropsTrigger interactableProps; // Lightning Strike
     public GameObject vrPlayer = null;
     public GameObject ClientSide = null;
     public bool find = false;
@@ -67,6 +69,7 @@ public class UIManager : MonoBehaviour
             find = true;
             ClientSide = GameObject.Find("Client side");
             spawnobject = ClientSide.GetComponent<SpawnObjects>();
+            interactableProps = ClientSide.GetComponent<InteractablePropsTrigger>(); // Lighttning strike
             spawnobjectNVR = vrPlayer.GetComponent<SpawnObjects>();
             setThresholdValuesForRadialBar(); // Set's time threshod to each enemy icon
             setThresholdValuesForHoroBar();
@@ -188,6 +191,8 @@ public class UIManager : MonoBehaviour
         int s = ClientSide.GetComponent<SpawnObjects>().getScore();
         ScoreClass.setScore(s);
 
+
+        //LightningStrike.SetCoolDownThreshold(interactableProps.getTimerLightningStrike());
         // Check which type of Enemy is active.Enable that type and disable all other types.
         // ---------------------------------------------------------------------------------------------------- 1: TaserShooter
         if (spawnobject.isSpawnIndexTaserShooter() && spawnobject.lock_TaserShooter)
@@ -248,6 +253,7 @@ public class UIManager : MonoBehaviour
         TaserShooter.SetCoolDownThreshold(spawnobject.getTimerThresholdTaserShooter());
         FallingDriller.SetCoolDownThreshold(spawnobject.getTimerThresholdFallingDriller());
         DrillerTrap.SetCoolDownThreshold(spawnobject.getTimerThresholdDrillerTrap());
+        //LightningStrike.SetCoolDownThreshold(interactableProps.getTimerThresholdLightningStrike());
     }
     void setValuesForHoroBar()
     {

@@ -130,14 +130,14 @@ public class SpawnObjects : NetworkBehaviour
         playerShoot_Couter = Time.time;
         playerShoot_Lock = true;
 
-    //Cool-down Time
-    // Enemy type:  1. Taser shooter
-    //              2. Catcher
-    //              3. Falling Driller
-    //              4. DrillerTrap
-    //              5. Clinder(for Test)
-    cd_TaserShooter = 0.5f;
-        cd_Catcher = 1.0f;
+        //Cool-down Time
+        // Enemy type:  1. Taser shooter
+        //              2. Catcher
+        //              3. Falling Driller
+        //              4. DrillerTrap
+        //              5. Clinder(for Test)
+        cd_TaserShooter = 2f; // 0.5f before;
+        cd_Catcher = 3.0f; // 2.0f before 
         cd_FallingDriller = 1.5f;
         cd_DrillerTrap = 3.0f;
         cd_Rock = 3.0f;

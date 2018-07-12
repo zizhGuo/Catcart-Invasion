@@ -56,6 +56,13 @@ public class InteractablePropsTrigger : NetworkBehaviour
         isLightning_NVR = false;
 
     }
+
+    public float getTimerLightningStrike() {
+        return Time.time - tempTimeCurrent;
+    }
+    public float getTimerThresholdLightningStrike() {
+        return tempTimerDuration;
+    }
 	
 	// Update is called once per frame
 	void Update ()
